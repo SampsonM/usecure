@@ -1,8 +1,7 @@
-import React from 'react';
-import { useGetSlides } from './api/slides/getSlides.hook';
+import { createFileRoute } from '@tanstack/react-router'
+import { useGetSlides } from '../api/slides/getSlides.hook';
 
-const App: React.FC = () => {
-
+const IndexRoute: React.FC = () => {
   const { data, error, isLoading } = useGetSlides();
 
   if (isLoading) return <p>Loading...</p>;
@@ -15,4 +14,6 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export const Route = createFileRoute('/')({
+  component: IndexRoute,
+})
