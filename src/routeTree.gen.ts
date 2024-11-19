@@ -12,7 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ScoreImport } from './routes/score'
-import { Route as AboutImport } from './routes/about'
+import { Route as CourseImport } from './routes/course'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -23,9 +23,9 @@ const ScoreRoute = ScoreImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const CourseRoute = CourseImport.update({
+  id: '/course',
+  path: '/course',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +46,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/course': {
+      id: '/course'
+      path: '/course'
+      fullPath: '/course'
+      preLoaderRoute: typeof CourseImport
       parentRoute: typeof rootRoute
     }
     '/score': {
@@ -67,41 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/course': typeof CourseRoute
   '/score': typeof ScoreRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/course': typeof CourseRoute
   '/score': typeof ScoreRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/course': typeof CourseRoute
   '/score': typeof ScoreRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/score'
+  fullPaths: '/' | '/course' | '/score'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/score'
-  id: '__root__' | '/' | '/about' | '/score'
+  to: '/' | '/course' | '/score'
+  id: '__root__' | '/' | '/course' | '/score'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  CourseRoute: typeof CourseRoute
   ScoreRoute: typeof ScoreRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  CourseRoute: CourseRoute,
   ScoreRoute: ScoreRoute,
 }
 
@@ -116,15 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
+        "/course",
         "/score"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/course": {
+      "filePath": "course.tsx"
     },
     "/score": {
       "filePath": "score.tsx"

@@ -9,7 +9,7 @@ type QuestionSlide = {
   answers: Answer[];
 };
   
-type Answer = {
+export type Answer = {
   id: string;
   text: string;
   correct: boolean;

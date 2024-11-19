@@ -18,3 +18,7 @@ npm run dev
 
 - convert imports to use alias imports 
     - e.g `import foo from '../bar/foo.ts` -> `import foo from '@bar/foo.ts`
+- Create Type for react component props with children
+- write unit tests if this was prod...
+- Write component tests, storybook components etc
+- Add linter on commit using husky
