@@ -37,6 +37,7 @@ export const AnswerRadio: FC<AnswerProps> = ({ onChecked, hasAnswerBeenChosen, i
           name={`question-${currentSlide}`}
           value={answer.id}
           checked={isAnswerChecked}
+          disabled={hasAnswerBeenChosen}
           onChange={(e) => onChecked(e.currentTarget.value)}
           className="min-h-5 min-w-5 border-2 rounded-full focus:ring-0"
         />

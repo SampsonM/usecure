@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { Slide } from "../../api/slides/getSlides.type";
 import BottomBar from "./BottomBar";
 import { AnswerRadio } from "./Answer/Answer";
+import { useNavigate } from "@tanstack/react-router";
 
 type SlidesProps = {
   slides: Slide['slides']
@@ -10,12 +11,15 @@ type SlidesProps = {
 export const Slides: FC<SlidesProps> = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [chosenAnswerId, setChosenAnswerId] = useState<null|string>(null);
+  const navigate = useNavigate();
 
   const onContinuePress = () => {
     setChosenAnswerId(null);
     
     if (currentSlide < slides.length - 1) {
       setCurrentSlide(currentSlide + 1);
+    } else if (currentSlide == slides.length - 1) {
+      navigate({ to: '/score' });
     }
   };
 
@@ -25,7 +29,8 @@ export const Slides: FC<SlidesProps> = ({ slides }) => {
     }
   };
 
-  const updateAnswered = (answerId: string) => {
+  const handleAnswerChecked = (answerId: string) => {
+    // TODO: keep score, store in global state zustand etc
     setChosenAnswerId(answerId)
   }
 
@@ -48,7 +53,7 @@ export const Slides: FC<SlidesProps> = ({ slides }) => {
         <div className="space-y-3 w-full">
           {slides[currentSlide].answers.map((answer) => (
             <AnswerRadio
-              onChecked={updateAnswered}
+              onChecked={handleAnswerChecked}
               hasAnswerBeenChosen={chosenAnswerId !== null}
               isAnswerChecked={chosenAnswerId === answer.id}
               currentSlide={currentSlide}

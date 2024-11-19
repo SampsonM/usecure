@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 const ScoreRoute = () => {
-  return 'Hello /score!'
+  return <p>Your score appears here</p>
 };
 
 export const Route = createFileRoute('/score')({
