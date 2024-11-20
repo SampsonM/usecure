@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { NullWrapper } from "../../NullWrapper/NullWrapper";
+import classNames from "classnames";
 
 type AnswerStateProps = {
   isAnswerCorrect: boolean;
@@ -15,15 +16,7 @@ export const ANSWER_STATES = {
   NOTHING_CHOSEN: 'NOTHING_CHOSEN'
 } as const;
 
-// Could be overkill, kept in for now
-// eslint-disable-next-line react-refresh/only-export-components
-export const ANSWER_STATE_COLORS = {
-  [ANSWER_STATES.CORRECT]: 'green',
-  [ANSWER_STATES.INCORRECT]: 'red',
-  [ANSWER_STATES.NOTHING_CHOSEN]: 'gray',
-  [ANSWER_STATES.CORRECT_NOT_CHOSEN]: 'yellow',
-}
-
+// TODO: Move to constants file, re-assess if this is worth it? its extendable, but will we ever have more options?
 // eslint-disable-next-line react-refresh/only-export-components
 export const ANSWER_STATE_TEXT = {
   [ANSWER_STATES.CORRECT]: 'Correct!',
@@ -40,6 +33,7 @@ type getAnswerStateArgs = {
   hasAnswerBeenChosen: boolean;
 }
 
+// TODO:  could this be a util instead?
 // eslint-disable-next-line react-refresh/only-export-components
 export const getAnswerState = ({isAnswerCorrect, isAnswerChecked, hasAnswerBeenChosen}: getAnswerStateArgs): ANSWER_STATES_KEYS => {
   if (isAnswerCorrect && isAnswerChecked) {
@@ -57,13 +51,25 @@ export const getAnswerState = ({isAnswerCorrect, isAnswerChecked, hasAnswerBeenC
   return ANSWER_STATES.NOTHING_CHOSEN
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const getAnswerTextStyles = (answerState: ANSWER_STATES_KEYS) => {
+  return classNames(
+    {'text-gray-500': ANSWER_STATES.NOTHING_CHOSEN === answerState},
+    {'text-green-500': ANSWER_STATES.CORRECT === answerState},
+    {'text-yellow-600': ANSWER_STATES.CORRECT_NOT_CHOSEN === answerState},
+    {'text-red-500': ANSWER_STATES.INCORRECT === answerState}
+  )
+};
+
 export const AnswerState: FC<AnswerStateProps> = ({ isAnswerCorrect, isAnswerChecked, hasAnswerBeenChosen }) => {
   const answerState = getAnswerState({isAnswerCorrect, isAnswerChecked, hasAnswerBeenChosen});
-  const answerColor = ANSWER_STATE_COLORS[answerState];
+  const answerStateStyles = getAnswerTextStyles(answerState);
 
   return (
     <NullWrapper isVisible={hasAnswerBeenChosen}>
-      <p className={`text-${answerColor}-600`}>{ANSWER_STATE_TEXT[answerState]}</p>
+      <p className={answerStateStyles}>
+        {ANSWER_STATE_TEXT[answerState]}
+      </p>
     </NullWrapper>
   )
 }

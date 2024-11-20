@@ -8,18 +8,27 @@ npm run dev
 
 ## Plan
 
-1. Build initial repo, tech stack setup etc
-1. Create API for getting data
-1. Add setup for pages
-1. Create course slides page
-1. Create pass | fail page
+1. Build initial repo, tech stack setup etc - Done
+1. Create API for getting data - Done
+1. Add setup for pages - Done
+1. Create course slides page - Done ~almost
+1. Create pass | fail page - Works in principle...
 
 ## TODO
 
-Would do these to "complete the task" if I had more time, but it's late, I'm tired, and I'm moving house next week!
+Outstanding tasks if I had more time;
 
-- Add global state using zustand to track score and maybe slides(not sure if slides needed atm though)
-- Prettify the score page, not even sure how I'd do that background yet!
-- put nice icons in place of radio button parts
-- Write better code, this is a mess, especially the colors part this is a bit all over
-- improve tailwind styles, they're also messy
+- Style the score page, not even sure how I'd do that background yet!
+- Put nice icons in place of radio button parts
+- Improve how we decide on colors for answer state, this is a mess
+- Improve tailwind styles, they're also messy
+- Add unit & Component tests
+
+## Some Principles I Try To Follow
+
+- TS types should used object types if multiple args passed
+- Use FC and pass in props for react components
+- Use custom FC type that has props with children type if passing children (not done due to time limits)
+- Use null wrapper to hide null ternary conditional logic
+- Keep state local until it is needed elsewhere
+- Create hooks for react tanstack queries & mutations

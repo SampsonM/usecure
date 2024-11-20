@@ -1,17 +1,29 @@
 import { FC, useState } from "react";
-import { Slide } from "../../api/slides/getSlides.type";
+import { QuestionSlide, Course } from "../../api/slides/getSlides.type";
 import BottomBar from "./BottomBar";
 import { AnswerRadio } from "./Answer/Answer";
 import { useNavigate } from "@tanstack/react-router";
+import { useCourseStore } from "../../store/course.store";
 
 type SlidesProps = {
-  slides: Slide['slides']
+  slides: Course['slides']
+}
+
+type HasAnswerCorrectlyArgs = {
+  currentSlideQuestion: QuestionSlide;
+  chosenAnswerId: string;
+}
+
+const hasAnsweredCorrectly = ({currentSlideQuestion, chosenAnswerId}: HasAnswerCorrectlyArgs) => {
+  const chosenAnswer = currentSlideQuestion.answers.find(q => q.id === chosenAnswerId);
+  return chosenAnswer?.correct;
 }
 
 export const Slides: FC<SlidesProps> = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [chosenAnswerId, setChosenAnswerId] = useState<null|string>(null);
   const navigate = useNavigate();
+  const {incrementScore} = useCourseStore()
 
   const onContinuePress = () => {
     setChosenAnswerId(null);
@@ -29,9 +41,12 @@ export const Slides: FC<SlidesProps> = ({ slides }) => {
     }
   };
 
-  const handleAnswerChecked = (answerId: string) => {
-    // TODO: keep score, store in global state zustand etc
-    setChosenAnswerId(answerId)
+  const handleAnswerChecked = (chosenAnswerId: string) => {
+    if (hasAnsweredCorrectly({currentSlideQuestion: slides[currentSlide], chosenAnswerId})) {
+      incrementScore()
+    }
+
+    setChosenAnswerId(chosenAnswerId)
   }
 
   return (
@@ -46,13 +61,14 @@ export const Slides: FC<SlidesProps> = ({ slides }) => {
 
         {/* Question */}
         <h2 className="text-lg font-semibold text-gray-800 mb-6">
-          {slides[currentSlide].question}
+          {slides[currentSlide]?.question}
         </h2>
 
         {/* Answers */}
         <div className="space-y-3 w-full">
           {slides[currentSlide].answers.map((answer) => (
             <AnswerRadio
+              key={answer.id}
               onChecked={handleAnswerChecked}
               hasAnswerBeenChosen={chosenAnswerId !== null}
               isAnswerChecked={chosenAnswerId === answer.id}

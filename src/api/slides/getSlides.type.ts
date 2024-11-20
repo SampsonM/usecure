@@ -1,9 +1,9 @@
-export type Slide = {
+export type Course = {
   title: string;
   slides: QuestionSlide[];
 };
 
-type QuestionSlide = {
+export type QuestionSlide = {
   type: "question";
   question: string;
   answers: Answer[];

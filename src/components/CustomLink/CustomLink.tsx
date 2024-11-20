@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { createLink, LinkComponent } from '@tanstack/react-router'
 
+// TODO: Is this required?
 interface BasicLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   // Add any additional props you want to pass to the anchor element
 }

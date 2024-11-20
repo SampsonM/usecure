@@ -1,6 +1,6 @@
 import { FC } from "react";
 import type { Answer } from "../../../api/slides/getSlides.type";
-import { ANSWER_STATE_COLORS, ANSWER_STATES, ANSWER_STATES_KEYS, AnswerState, getAnswerState } from "./AnswerState";
+import { ANSWER_STATES, ANSWER_STATES_KEYS, AnswerState, getAnswerState, getAnswerTextStyles } from "./AnswerState";
 import classNames from "classnames";
 
 type AnswerProps = {
@@ -24,14 +24,11 @@ const getAnswerInputStyles = (answerState: ANSWER_STATES_KEYS) => {
 export const AnswerRadio: FC<AnswerProps> = ({ onChecked, hasAnswerBeenChosen, isAnswerChecked, answer, currentSlide }) => {
   const answerState = getAnswerState({isAnswerChecked, isAnswerCorrect: answer.correct, hasAnswerBeenChosen});
   const answerInputStyles = getAnswerInputStyles(answerState);
-  const color = ANSWER_STATE_COLORS[answerState];
+  const answerTextStyles = getAnswerTextStyles(answerState);
 
   return (
     <>
-      <label
-        key={answer.id}
-        className={answerInputStyles}
-      >
+      <label className={answerInputStyles}>
         <input
           type="radio"
           name={`question-${currentSlide}`}
@@ -41,7 +38,7 @@ export const AnswerRadio: FC<AnswerProps> = ({ onChecked, hasAnswerBeenChosen, i
           onChange={(e) => onChecked(e.currentTarget.value)}
           className="min-h-5 min-w-5 border-2 rounded-full focus:ring-0"
         />
-        <span className={`text-${color}-600`}>{answer.text}</span>
+        <span className={answerTextStyles}>{answer.text}</span>
       </label>
       <AnswerState hasAnswerBeenChosen={hasAnswerBeenChosen} isAnswerChecked={isAnswerChecked} isAnswerCorrect={answer.correct} />
     </>
